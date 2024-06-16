@@ -11,16 +11,16 @@ class Pyplup(list):
 
     def _get_keys_and_types(self) -> tuple[list, dict[Any, list]]:
         """
-        Extracts and returns the keys and their corresponding types from a list of dictionaries.
+        Extracts and returns the keys and their corresponding types from a list of dicts.
 
-        This method processes a list of dictionaries, extracting each dictionary's keys as keys and
-        the types of their corresponding values. It ensures that all entries in the list are dictionaries
-        and aggregates the types of values associated with each key across all dictionaries.
+        This method processes a list of dicts, extracting each dict's keys as keys and
+        the types of their corresponding values. It ensures that all entries in the list are dicts
+        and aggregates the types of values associated with each key across all dicts.
 
         Returns:
             tuple[list, dict[Any, list]]: A tuple containing:
-                - A list of unique key names found across all dictionaries.
-                - A dictionary mapping each field to a list of unique types of values associated with that key.
+                - A list of unique key names found across all dicts.
+                - A dict mapping each key to a list of unique types of values associated with that key.
         """
 
         if not isinstance(self.data, list):
@@ -32,7 +32,7 @@ class Pyplup(list):
         for item in self.data:
             if not isinstance(item, dict):
                 raise ValueError(
-                    f"Input should be a list of dictionaries - got: {type(item)} in list"
+                    f"Input should be a list of dicts - got: {type(item)} in list"
                 )
 
             for key in item.keys():
