@@ -60,6 +60,18 @@ class DataDict(list):
         return DataDict(data)
 
     def _get_nested_value(self, record, key_path):
+        """
+        Helper method to get a nested value from a dictionary.
+
+        Args:
+            record (dict): The dictionary to search for the nested value.
+            key_path (str): The path to the nested value.
+            Each key in the key_path is seperated by a delimiter.
+            The default delimiter is ".".
+
+        Returns:
+            Any: The nested value if found, None otherwise.
+        """
 
         current_value = record
         for key in key_path.split("."):
@@ -70,6 +82,22 @@ class DataDict(list):
         return current_value
 
     def select(self, *keys):
+        """
+        Selects and returns a DataDict object with the specified keys.
+        The DataDict object can be treated exactly like a list of dicts, but can also perform more complex queries
+
+        Args:
+            *keys (str): The keys to select. This can be any number of keys found in the DataDict.
+            Each additional key to select can be added as a new unnamed argument. For example:
+            DataDict.select("name", "age")
+            Nested keys can be accessed by using a delimiter (default is "."). For example: "user.name". So this query would also be valid:
+            DataDict.select("name", "age", "user.name")
+
+        Returns:
+            DataDict: A DataDict object containing the selected dicts.
+            The DataDict object can be treated exactly like a list of dicts, but can also perform more complex queries
+        """
+
         result = []
 
         for item in self.data:
@@ -84,6 +112,20 @@ class DataDict(list):
         return self._to_datadict(result)
 
     def where(self, field, comparison, value):
+        """
+        Filters the DataDict object based on the specified field and comparison.
+        The DataDict object can be treated exactly like a list of dicts, but can also perform more complex queries.
+
+        Args:
+            field (str): The field to filter by. This can be any key found in the DataDict.
+            comparison (str): The comparison operator to use. This can be any comparison operator found in the DataDict.
+            value (Any): The value to compare the field to.
+
+        Returns:
+            DataDict: A DataDict object containing the filtered dicts.
+            The DataDict object can be treated exactly like a list of dicts, but can also perform more complex queries.
+        """
+
         result = []
 
         def get_nested_value(item, field_path):
