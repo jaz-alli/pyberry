@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
-    name="pyberry",
+    name="pymelon",
     version="0.1.0",
     description="A data manipulation library for JSON and lists of dictionaries.",
     packages=find_packages(),
