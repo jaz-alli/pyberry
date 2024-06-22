@@ -126,7 +126,7 @@ class DataDict(list):
 
         result = []
 
-        def get_nested_value(item, key_path):
+        def get_nested_value(item: dict, key_path: str) -> Any:
             current_value = item
             for key in key_path.split("."):
                 if isinstance(current_value, dict) and key in current_value:
