@@ -1,5 +1,5 @@
 import pytest
-import pyberry as pb
+import pymelon as pm
 
 data = [
     {"id": 1, "name": "Alice", "age": 30},
@@ -23,7 +23,7 @@ def mighty_assert(condition, error_message):
 
 
 def test_head():
-    dd = pb.DataDict(data)
+    dd = pm.DataDict(data)
     try:
         assert dd.head() == data[:5]
     except AssertionError as e:

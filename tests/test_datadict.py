@@ -1,6 +1,6 @@
 import pytest
 
-from pyberry.datadict import DataDict
+from pymelon.datadict import DataDict
 
 
 normal = [{"name": "John", "age": 20}, {"name": "Jane", "age": 25}]
