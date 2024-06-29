@@ -79,6 +79,34 @@ class DataDict(list):
                 return None
         return current_value
 
+    def head(self, n: int = 5) -> "DataDict":
+        """
+        Returns the first `n` elements of the DataDict.
+        If n is greater than the number of elements in the DataDict, all elements are returned.
+
+        Args:
+            n (int): The number of elements to return from the beginning of the DataDict.
+
+        Returns:
+            list[dict]: A list containing the first `n` elements of the DataDict.
+        """
+
+        return self.data[:n]
+
+    def tail(self, n: int = 5) -> "DataDict":
+        """
+        Returns the last `n` elements of the DataDict.
+        If n is greater than the number of elements in the DataDict, all elements are returned.
+
+        Args:
+            n (int): The number of elements to return from the end of the DataDict.
+
+        Returns:
+            list[dict]: A list containing the last `n` elements of the DataDict.
+        """
+
+        return self.data[-n:]
+
     def select(self, *keys: str) -> "DataDict":
         """
         Selects and returns a DataDict object with the specified keys.
