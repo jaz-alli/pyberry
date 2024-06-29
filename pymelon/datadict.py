@@ -107,16 +107,75 @@ class DataDict(list):
 
         return self.data[-n:]
 
+    def to_int(self, key):
+        """
+        Converts the value of a specified key in each dictionary within the DataDict to an integer.
+
+        Args:
+            key (str): The key whose values are to be converted to integers.
+
+        Raises:
+            ValueError: If the value associated with the key cannot be converted to an integer.
+        """
+        for item in self.data:
+            if key in item:
+                try:
+                    item[key] = int(item[key])
+                except:
+                    raise ValueError(
+                        f"Encountered value '{item[key]}' of type {type(item[key])} that cannot be cast to an int."
+                    )
+
+    def to_float(self, key):
+        """
+        Converts the value of a specified key in each dictionary within the DataDict to an float.
+
+        Args:
+            key (str): The key whose values are to be converted to floats.
+
+        Raises:
+            ValueError: If the value associated with the key cannot be converted to a float.
+        """
+        for item in self.data:
+            if key in item:
+                try:
+                    item[key] = float(item[key])
+                except:
+                    raise ValueError(
+                        f"Encountered value '{item[key]}' of type {type(item[key])} that cannot be cast to an float."
+                    )
+
+    def to_str(self, key):
+        """
+        Converts the value of a specified key in each dictionary within the DataDict to an string.
+
+        Args:
+            key (str): The key whose values are to be converted to strings.
+
+        Raises:
+            ValueError: If the value associated with the key cannot be converted to a string.
+        """
+        for item in self.data:
+            if key in item:
+                try:
+                    item[key] = str(item[key])
+                except:
+                    raise ValueError(
+                        f"Encountered value '{item[key]}' of type {type(item[key])} that cannot be cast to an str."
+                    )
+
     def select(self, *keys: str) -> "DataDict":
         """
         Selects and returns a DataDict object with the specified keys.
-        The DataDict object can be treated exactly like a list of dicts, but can also perform more complex queries
+        The DataDict object can be treated exactly like a list of dicts,
+        but can also perform more complex queries
 
         Args:
             *keys (str): The keys to select. This can be any number of keys found in the DataDict.
             Each additional key to select can be added as a new unnamed argument. For example:
             DataDict.select("name", "age")
-            Nested keys can be accessed by using a delimiter (default is "."). For example: "user.name". So this query would also be valid:
+            Nested keys can be accessed by using a delimiter (default is ".").
+            For example: "user.name". So this query would also be valid:
             DataDict.select("name", "age", "user.name")
 
         Returns:
