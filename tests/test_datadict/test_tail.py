@@ -1,5 +1,5 @@
 import pytest
-import pyberry as pb
+import pymelon as pm
 
 data = [
     {"id": 1, "name": "Alice", "age": 30},
@@ -16,7 +16,7 @@ data = [
 
 
 def test_tail():
-    dd = pb.DataDict(data)
+    dd = pm.DataDict(data)
     try:
         assert dd.tail() == data[-5:]
     except AssertionError as e:
