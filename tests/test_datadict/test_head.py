@@ -15,13 +15,6 @@ data = [
 ]
 
 
-def mighty_assert(condition, error_message):
-    try:
-        assert condition
-    except AssertionError as e:
-        pytest.fail(f"{error_message}: {e}")
-
-
 def test_head():
     dd = pm.DataDict(data)
     try:
