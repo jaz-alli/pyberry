@@ -15,21 +15,16 @@ data = [
 ]
 
 
-def test_head():
+def test_append():
     dd = pm.DataDict(data)
+
     try:
-        assert dd.head() == data[:5]
+        dd.append({"id": 11, "name": "John", "age": 32})
+        assert len(dd) == 11
     except AssertionError as e:
-        pytest.fail(f"default n value: {e}")
+        pytest.fail(f"append dict: {e}")
+
     try:
-        assert dd.head(3) == data[:3]
+        pytest.raises(TypeError, dd.append, 5)
     except AssertionError as e:
-        pytest.fail(f"user n value - less than data length: {e}")
-    try:
-        assert dd.head(30) == data
-    except AssertionError as e:
-        pytest.fail(f"user n value - greater than data length: {e}")
-    try:
-        pytest.raises(TypeError, dd.head, "hello")
-    except AssertionError as e:
-        pytest.fail(f"user n value - not an int: {e}")
+        pytest.fail(f"append non-dict: {e}")

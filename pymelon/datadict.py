@@ -238,3 +238,140 @@ class DataDict(list):
                 elif comparison == "<=" and key_value <= value:
                     result.append(item)
         return self._to_datadict(result)
+
+    def min(self, key) -> int | float:
+        """
+        Finds the minimum value for a specified key in the DataDict where the values are of type int or float.
+
+        Args:
+            key (str): The key to find the minimum value for.
+
+        Returns:
+            int | float: The minimum value found for the specified key. Returns None if no suitable value is found.
+
+        Raises:
+            ValueError: If a value under the specified key is not an int or float.
+        """
+
+        current_min = None
+        for item in self.data:
+            if key in item:
+                try:
+                    float(item[key])
+                    if current_min == None:
+                        current_min = item[key]
+                    else:
+                        current_min = min(item[key], current_min)
+
+                except:
+                    raise ValueError(
+                        f"Encountered type {type(item[key])}. The min function can only be used with int or float types."
+                    )
+        return current_min
+
+    def max(
+        self, key: str | int | float | tuple[str | int | float, ...]
+    ) -> int | float:
+        """
+        Finds the maximum value for a specified key in the DataDict where the values are of type int or float.
+
+        Args:
+            key (str): The key to find the maximum value for.
+
+        Returns:
+            int | float: The maximum value found for the specified key.
+        """
+
+        current_max = None
+        for item in self.data:
+            if key in item:
+
+                try:
+                    if not isinstance(item[key], int):
+                        float(item[key])
+                    if current_max == None:
+                        current_max = item[key]
+                    else:
+                        current_max = max(item[key], current_max)
+
+                except:
+                    raise ValueError(
+                        f"Encountered type {type(item[key])}. The min function can only be used with ints or floats."
+                    )
+        return current_max
+
+    def _get_numerical_field_values(
+        self, key: str | int | float | tuple[str | int | float, ...]
+    ) -> list[int | float]:
+        values = []
+        for item in self.data:
+            if key in item:
+                try:
+                    if not isinstance(item[key], int):
+                        float(item[key])
+                    values.append(item[key])
+                except:
+                    raise ValueError(
+                        f"Encountered type {type(item[key])}. The min function can only be used with ints or floats."
+                    )
+        return values
+
+    def _calculate_mean(self, values: list[int | float]) -> int | float:
+        return sum(values) / len(values)
+
+    def mean(
+        self, key: str | int | float | tuple[str | int | float, ...]
+    ) -> int | float:
+        """
+        Calculates the mean value for a specified key in the DataDict where the values are of type int or float.
+
+        Args:
+            key (str): The key to find the mean value for.
+
+        Returns:
+            int | float: The mean value found for the specified key.
+        """
+
+        values = self._get_numerical_field_values(key)
+        return self._calculate_mean(values)
+
+    def _calculate_median(self, values: list[int | float]) -> int | float:
+        values.sort()
+        if len(values) % 2 == 0:
+            return (values[len(values) // 2] + values[len(values) // 2 - 1]) / 2
+        else:
+            return values[len(values) // 2]
+
+    def median(
+        self, key: str | int | float | tuple[str | int | float, ...]
+    ) -> int | float:
+        """
+        Calculates the median value for a specified key in the DataDict where the values are of type int or float.
+
+        Args:
+            key (str): The key to find the median value for.
+
+        Returns:
+            int | float: The median value found for the specified key.
+        """
+
+        values = self._get_numerical_field_values(key)
+        return self._calculate_median(values)
+
+    def append(self, item: dict):
+        """
+        Overrides the append method to ensure only dictionaries can be added to the DataDict.
+
+        Args:
+            item (dict): The dictionary to be appended to the DataDict.
+
+        Raises:
+            TypeError: If the item is not a dictionary.
+        """
+
+        if not isinstance(item, dict):
+            raise TypeError("Only dictionaries can be appended to DataDict")
+        self.data.append(item)
+
+    def __len__(self):
+        return len(self.data)
