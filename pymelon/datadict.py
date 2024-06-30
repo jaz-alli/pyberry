@@ -371,7 +371,6 @@ class DataDict(list):
 
         if not isinstance(item, dict):
             raise TypeError("Only dictionaries can be appended to DataDict")
-        # super().append(item)
         self.data.append(item)
 
     def __len__(self):
